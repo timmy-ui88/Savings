@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f5f7;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            background-color: white;
+            width: 350px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        #result {
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Savings Tracker</h1>
+
+        <input type="text" id="monthlySavings" placeholder="Monthly savings amount">
+
+        <input type="text" id="savingsGoal" placeholder="Savings goal">
+
+        <button onclick="trackSavings()">Track My Savings</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function trackSavings() {
+            let monthlySavings = Number(
+                document.getElementById("monthlySavings").value
+            );
+
+            let savingsGoal = Number(
+                document.getElementById("savingsGoal").value
+            );
+
+            if (isNaN(monthlySavings) || isNaN(savingsGoal)) {
+                document.getElementById("result").innerText =
+                    "Please enter valid numbers";
+                return;
+            }
+
+            let totalSaved = 0;
+            let output = "";
+
+            for (let month = 1; month <= 12; month++) {
+                totalSaved += monthlySavings;
+
+                output += `Month ${month}: $${totalSaved} saved`;
+
+                if (totalSaved >= savingsGoal) {
+                    output += " 🎉 Goal reached!";
+                }
+
+                output += "<br>";
+            }
+
+            if (totalSaved >= savingsGoal) {
+                output += `
+                    <br>
+                    <strong>Summary:</strong>
+                    After 12 months, you saved $${totalSaved}.
+                    Your savings goal was reached!
+                `;
+            } else {
+                output += `
+                    <br>
+                    <strong>Summary:</strong>
+                    After 12 months, you saved $${totalSaved}.
+                    Your savings goal was not reached.
+                `;
+            }
+
+            document.getElementById("result").innerHTML = output;
+        }
+    </script>
+</body>
+</html>
